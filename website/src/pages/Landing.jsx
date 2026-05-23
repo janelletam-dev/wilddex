@@ -68,20 +68,25 @@ export default function Landing() {
       </section>
 
       <section ref={gridRef} className="mb-12">
-        <h2 className="text-xs sm:text-sm text-wd-text-secondary uppercase tracking-wider mb-4 text-center">
+        <h2 className="text-xs sm:text-sm text-wd-text-secondary uppercase tracking-wider mb-2 text-center">
           All creatures — {filtered.length} discovered
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-          {filtered.map(({ name, idx }) => (
-            <CreatureCard
-              key={name}
-              name={name}
-              index={idx}
-              onClick={() => navigate(`/creature/${toSlug(name)}`)}
-            />
-          ))}
-        </div>
-        {filtered.length === 0 && (
+        <p className="text-center text-[11px] text-wd-text-muted mb-6">
+          Swipe to flip through the deck
+        </p>
+        {filtered.length > 0 ? (
+          <div className="wd-deck flex gap-6 overflow-x-auto px-[16vw] py-6 -mx-4 sm:-mx-6">
+            {filtered.map(({ name, idx }) => (
+              <CreatureCard
+                key={name}
+                name={name}
+                index={idx}
+                variant="deck"
+                onClick={() => navigate(`/creature/${toSlug(name)}`)}
+              />
+            ))}
+          </div>
+        ) : (
           <p className="text-center text-wd-text-muted text-sm mt-8">
             No creatures match that name.
           </p>

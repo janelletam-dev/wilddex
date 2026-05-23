@@ -216,7 +216,7 @@ export default function Entry() {
       {entry && (
         <>
           <div className="flex flex-col items-center mb-6">
-            <PixelSprite name={displayName} size={120} className="mb-4" />
+            <PixelSprite name={displayName} size={260} className="mb-4 w-[70vw] h-[70vw] max-w-[320px] max-h-[320px]" />
             <h1 className="font-pixel text-wd-accent-light text-xl sm:text-2xl text-center leading-snug">
               {displayName}
             </h1>
