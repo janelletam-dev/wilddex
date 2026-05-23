@@ -1,4 +1,8 @@
 {
+  "framework": "vite",
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
   "rewrites": [
     { "source": "/((?!api/|assets/|sprites/|@|src/|node_modules/|.*\\.).+)", "destination": "/index.html" }
   ]
