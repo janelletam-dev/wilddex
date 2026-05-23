@@ -216,7 +216,7 @@ export default function Entry() {
       {entry && (
         <>
           <div className="flex flex-col items-center mb-6">
-            <PixelSprite name={displayName} size={260} className="mb-4 w-[70vw] h-[70vw] max-w-[320px] max-h-[320px]" />
+            <PixelSprite name={animalName || displayName} size={260} className="mb-4 w-[70vw] h-[70vw] max-w-[320px] max-h-[320px]" />
             <h1 className="font-pixel text-wd-accent-light text-xl sm:text-2xl text-center leading-snug">
               {displayName}
             </h1>
@@ -259,7 +259,7 @@ export default function Entry() {
           )}
 
           {!ttsHidden && entry.narrationScript && (
-            <div className="mb-6">
+            <div className="mb-3">
               <button
                 onClick={handleListen}
                 disabled={speaking}
@@ -269,6 +269,17 @@ export default function Entry() {
               </button>
             </div>
           )}
+
+          <div className="mb-6">
+            <a
+              href={`https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(displayName)}&title=Special:MediaSearch&go=Go&type=image`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center bg-wd-bg-surface border-2 border-wd-accent-dim text-wd-accent rounded-full px-5 py-3 text-sm hover:border-wd-accent hover:text-wd-accent-light transition-colors"
+            >
+              See real photos ↗
+            </a>
+          </div>
 
           {entry.questions && entry.questions.length > 0 && !activeQuestion && (
             <div className="mb-6">

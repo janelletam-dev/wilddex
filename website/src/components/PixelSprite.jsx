@@ -6,14 +6,19 @@ export default function PixelSprite({ name, size = 64, className = '' }) {
   const letter = (name || '?').trim().charAt(0).toUpperCase();
   const fontSize = Math.max(12, Math.floor(size * 0.4));
   const src = name ? `/sprites/${toSlug(name)}.png` : null;
+  const showImage = src && !imgFailed;
+
+  const frameClasses = showImage
+    ? ''
+    : 'bg-wd-bg-surface border-2 border-wd-accent-dim rounded-lg';
 
   return (
     <div
-      className={`wd-sprite-anim flex items-center justify-center bg-wd-bg-surface border-2 border-wd-accent-dim rounded-lg overflow-hidden ${className}`}
+      className={`wd-sprite-anim flex items-center justify-center overflow-hidden ${frameClasses} ${className}`}
       style={{ width: size, height: size }}
       aria-label={name ? `Pixel sprite for ${name}` : 'Pixel sprite'}
     >
-      {src && !imgFailed ? (
+      {showImage ? (
         <img
           src={src}
           alt={name || ''}
