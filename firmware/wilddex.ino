@@ -592,7 +592,7 @@ void showQRCode() {
     slug.replace("(", "");
     slug.replace(")", "");
 
-    String url = "https://wilddex.app/creature/" + slug;
+    String url = "https://wilddexcardputer.vercel.app/creature/" + slug;
 
     M5Cardputer.Display.fillScreen(WD_BG_DEEP);
 

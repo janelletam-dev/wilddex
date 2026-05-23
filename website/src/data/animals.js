@@ -1,0 +1,18 @@
+export const ANIMALS = [
+  'Axolotl', 'Albatross', 'Anaconda', 'Armadillo', 'Arctic Fox',
+  'Bengal Tiger', 'Blue Whale', 'Bald Eagle', 'Black Mamba', 'Blobfish',
+  'Cheetah', 'Chameleon', 'Capybara', 'Chimpanzee', 'Clownfish',
+  'Dolphin', 'Dragonfly', 'Dumbo Octopus', 'Elephant', 'Electric Eel',
+  'Emperor Penguin', 'Eagle Owl', 'Flamingo', 'Fox', 'Frog',
+  'Golden Retriever', 'Gorilla', 'Great White Shark', 'Gecko', 'Hummingbird',
+  'Honey Badger', 'Hammerhead Shark', 'Iguana', 'Ibex', 'Jellyfish',
+  'Jaguar', 'Komodo Dragon', 'Koala', 'King Cobra', 'Lion',
+  'Lemur', 'Lynx', 'Mantis Shrimp', 'Moose', 'Manta Ray',
+  'Narwhal', 'Nautilus', 'Octopus', 'Orangutan', 'Osprey',
+  'Otter', 'Pangolin', 'Platypus', 'Panda', 'Peregrine Falcon',
+  'Pufferfish', 'Quokka', 'Quetzal', 'Red Panda', 'Rhinoceros',
+  'Rattlesnake', 'Snow Leopard', 'Sloth', 'Seahorse', 'Scorpion',
+  'Stingray', 'Tardigrade', 'Tarantula', 'Toucan', 'Tortoise',
+  'Unicornfish', 'Vulture', 'Viper', 'Wolf', 'Wolverine',
+  'Whale Shark', 'Wombat', 'Xenopus', 'Yak', 'Zebra',
+];

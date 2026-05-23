@@ -1,0 +1,24 @@
+# Arduino build
+build/
+*.elf
+*.bin
+*.hex
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# Environment / secrets
+.env
+config.h
+**/secrets.*
+
+# Node modules (website)
+node_modules/
+dist/
+.vercel/
