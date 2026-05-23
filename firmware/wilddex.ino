@@ -610,7 +610,7 @@ void showQRCode() {
     M5Cardputer.Display.setTextColor(WD_ACCENT_DIM);
     M5Cardputer.Display.setTextSize(1);
     M5Cardputer.Display.setCursor(5, 122);
-    M5Cardputer.Display.println("wilddex.app");
+    M5Cardputer.Display.println("wilddexcardputer.vercel.app");
 
     M5Cardputer.Display.setTextColor(WD_ACCENT);
     M5Cardputer.Display.setCursor(160, 122);
