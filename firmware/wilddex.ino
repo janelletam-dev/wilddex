@@ -41,6 +41,22 @@ bool viewingEntry = false;
 bool viewingQuestions = false;
 bool viewingAnswer = false;
 
+// Collection - discovered animals
+String discovered[100];
+int discoveredCount = 0;
+bool viewingCollection = false;
+
+void addToCollection(String name) {
+    // Check if already discovered
+    for (int i = 0; i < discoveredCount; i++) {
+        if (discovered[i] == name) return;
+    }
+    if (discoveredCount < 100) {
+        discovered[discoveredCount] = name;
+        discoveredCount++;
+    }
+}
+
 // Animal database
 const char* animalDB[] = {
     "Axolotl", "Albatross", "Anaconda", "Armadillo", "Arctic Fox",
@@ -137,7 +153,7 @@ void drawInput() {
     M5Cardputer.Display.setTextSize(1);
     M5Cardputer.Display.setTextColor(WD_ACCENT);
     M5Cardputer.Display.setCursor(10, 110);
-    M5Cardputer.Display.println("[ENTER]Search [R]Random [B]Browse");
+    M5Cardputer.Display.printf("[ENTER]Search [R]Rnd [B]List [D]%d", discoveredCount);
     M5Cardputer.Display.setTextColor(WD_ACCENT_DIM);
     M5Cardputer.Display.setCursor(10, 122);
     M5Cardputer.Display.println("Spelling mistakes? No worries!");
@@ -311,6 +327,42 @@ void drawBrowse() {
     M5Cardputer.Display.setTextColor(WD_ACCENT);
     M5Cardputer.Display.setCursor(5, 127);
     M5Cardputer.Display.println("[W/S]Scroll [ENTER]Select [DEL]Back");
+}
+
+void drawCollection() {
+    M5Cardputer.Display.fillScreen(WD_BG_DEEP);
+    M5Cardputer.Display.setTextColor(WD_ACCENT);
+    M5Cardputer.Display.setTextSize(1);
+    M5Cardputer.Display.setCursor(5, 3);
+    M5Cardputer.Display.printf("MY COLLECTION: %d found", discoveredCount);
+    M5Cardputer.Display.drawLine(0, 14, 240, 14, WD_ACCENT_DIM);
+
+    if (discoveredCount == 0) {
+        M5Cardputer.Display.setTextColor(WD_ACCENT_DIM);
+        M5Cardputer.Display.setCursor(5, 50);
+        M5Cardputer.Display.println("No creatures discovered yet!");
+        M5Cardputer.Display.setCursor(5, 65);
+        M5Cardputer.Display.println("Search or browse to find some.");
+    } else {
+        for (int i = browseOffset; i < discoveredCount && (i - browseOffset) < 10; i++) {
+            int y = 18 + ((i - browseOffset) * 11);
+
+            if (i == browseOffset + browseSelect) {
+                M5Cardputer.Display.fillRect(0, y - 1, 240, 11, WD_ACCENT);
+                M5Cardputer.Display.setTextColor(WD_BG_DEEP);
+            } else {
+                M5Cardputer.Display.setTextColor(WD_TEXT);
+            }
+
+            M5Cardputer.Display.setCursor(5, y);
+            M5Cardputer.Display.print(i == browseOffset + browseSelect ? "> " : "  ");
+            M5Cardputer.Display.print(discovered[i]);
+        }
+    }
+
+    M5Cardputer.Display.setTextColor(WD_ACCENT);
+    M5Cardputer.Display.setCursor(5, 127);
+    M5Cardputer.Display.println("[W/S]Scroll [ENTER]View [DEL]Back");
 }
 
 // ==================== ENTRY DISPLAY ====================
@@ -914,6 +966,11 @@ void fetchAnimal(String animal) {
     Serial.println("Entry: " + content);
     lastEntryJson = content;
 
+    // Add to collection
+    JsonDocument tempDoc;
+    deserializeJson(tempDoc, content);
+    addToCollection(tempDoc["commonName"].as<String>());
+
     JsonDocument entryDoc;
     DeserializationError error = deserializeJson(entryDoc, content);
 
@@ -1065,6 +1122,43 @@ void loop() {
             return;
         }
 
+        // === VIEWING COLLECTION ===
+        if (viewingCollection) {
+            for (auto i : status.word) {
+                if (i == 'w' || i == 'W') {
+                    if (browseSelect > 0) browseSelect--;
+                    else if (browseOffset > 0) browseOffset--;
+                    M5Cardputer.Speaker.tone(1760, 15);
+                    drawCollection();
+                    return;
+                }
+                if (i == 's' || i == 'S') {
+                    if (browseOffset + browseSelect < discoveredCount - 1) {
+                        if (browseSelect < 9) browseSelect++;
+                        else browseOffset++;
+                    }
+                    M5Cardputer.Speaker.tone(1760, 15);
+                    drawCollection();
+                    return;
+                }
+            }
+            if (status.enter && discoveredCount > 0) {
+                String selected = discovered[browseOffset + browseSelect];
+                viewingCollection = false;
+                inputText = selected;
+                fetchAnimal(selected);
+                return;
+            }
+            if (status.del) {
+                viewingCollection = false;
+                browseOffset = 0;
+                browseSelect = 0;
+                inputText = "";
+                drawInput();
+            }
+            return;
+        }
+
         // === VIEWING ANSWER ===
         if (viewingAnswer) {
             if (status.del) redrawEntry();
@@ -1120,6 +1214,13 @@ void loop() {
                     M5Cardputer.Speaker.tone(784, 120);
                     inputText = "RANDOM";
                     fetchAnimal("Pick a random interesting wild animal and generate its entry");
+                    return;
+                }
+                if (i == 'd' || i == 'D') {
+                    viewingCollection = true;
+                    browseOffset = 0;
+                    browseSelect = 0;
+                    drawCollection();
                     return;
                 }
                 if (i == 'b' || i == 'B') {
