@@ -123,7 +123,17 @@ export default function Landing() {
       </section>
 
       <footer className="text-center text-xs text-wd-text-muted py-6 border-t border-wd-bg-bar leading-relaxed">
-        <div>Made by Janelle Tamayo</div>
+        <div>
+          Made by{' '}
+          <a
+            href="https://github.com/janelletam-dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-wd-accent hover:text-wd-accent-light underline underline-offset-2"
+          >
+            Janelle Tamayo
+          </a>
+        </div>
         <div className="mt-1">For Sir David Attenborough, with thanks for 100 years of wonder</div>
       </footer>
     </div>
