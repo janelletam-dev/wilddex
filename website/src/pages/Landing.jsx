@@ -122,8 +122,9 @@ export default function Landing() {
         </p>
       </section>
 
-      <footer className="text-center text-xs text-wd-text-muted py-6 border-t border-wd-bg-bar">
-        Creative Stallion · WildDex
+      <footer className="text-center text-xs text-wd-text-muted py-6 border-t border-wd-bg-bar leading-relaxed">
+        <div>Made by Janelle Tamayo</div>
+        <div className="mt-1">For Sir David Attenborough, with thanks for 100 years of wonder</div>
       </footer>
     </div>
   );
